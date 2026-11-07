@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>毛豆书屋 — 找到一群愿意认真聊天的人</title>
+<meta name="description" content="毛豆书屋：找到一群愿意认真聊天的人。阅读、电影、写作与思辨的真诚交流空间。线上 · 线下，每周末开放。">
+<meta name="theme-color" content="#0b0d0f">
+<meta property="og:title" content="毛豆书屋 — 找到一群愿意认真聊天的人">
+<meta property="og:description" content="阅读、电影、写作与思辨的真诚交流空间。线上 · 线下，每周末开放。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='12'%20fill='%23111417'/%3E%3Ctext%20x='32'%20y='45'%20font-size='34'%20font-family='sans-serif'%20font-weight='700'%20fill='%2334c77b'%20text-anchor='middle'%3E%E8%B1%86%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --term-bg:#0b0d0f;
+    --term-bg-elev:#111417;
+    --term-bg-soft:#15191d;
+    --term-ink:#e3e7ea;
+    --term-ink-dim:#99a2aa;
+    --term-ink-mute:#8a939c;
+    --term-line:#1e2328;
+    --term-line-soft:#181c21;
+    --term-accent:#34c77b;
+    --term-accent-hover:#4ad48d;
+    --term-accent-line:rgba(52,199,123,.32);
+    --term-accent-soft:rgba(52,199,123,.10);
+    --term-sans:"Inter","Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+    --term-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --term-fs-h1:clamp(40px,5vw,64px);
+    --term-fs-h2:clamp(28px,3.4vw,40px);
+    --term-fs-h3:20px;
+    --term-fs-body:16px;
+    --term-fs-small:14px;
+    --term-fs-label:12px;
+    --term-r-sm:6px;
+    --term-r-md:8px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--term-bg);
+    color:var(--term-ink);
+    font-family:var(--term-sans);
+    font-size:var(--term-fs-body);
+    line-height:1.65;
+    font-feature-settings:"palt" 1;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  ::selection{background:var(--term-accent);color:var(--term-bg)}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  .mono{font-family:var(--term-mono)}
+  .accent{color:var(--term-accent)}
+  .muted{color:var(--term-ink-dim)}
+  .dim{color:var(--term-ink-mute)}
+  .container{max-width:1280px;margin:0 auto;padding:0 32px}
+  section{scroll-margin-top:88px}
+
+  .display{font-weight:600;letter-spacing:-.02em;line-height:1.2}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:var(--term-fs-label);font-weight:500;
+    text-transform:uppercase;letter-spacing:.08em;
+    color:var(--term-ink-dim);
+  }
+  .eyebrow .num{font-family:var(--term-mono);color:var(--term-accent);font-weight:500}
+  .eyebrow .en{color:var(--term-ink-mute);letter-spacing:.06em}
+
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:var(--term-fs-label);font-weight:500;
+    padding:5px 12px;border:1px solid var(--term-line);
+    border-radius:100px;color:var(--term-ink-dim);letter-spacing:.04em;
+  }
+  .status-dot{
+    display:inline-block;width:6px;height:6px;
+    background:var(--term-accent);border-radius:50%;flex-shrink:0;
+  }
+  .pulse{animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(52,199,123,.45)}
+    50%{box-shadow:0 0 0 5px rgba(52,199,123,0)}
+  }
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:var(--term-fs-small);font-weight:500;line-height:1.2;
+    padding:10px 18px;border:1px solid var(--term-line);
+    background:transparent;color:var(--term-ink);
+    border-radius:var(--term-r-sm);cursor:pointer;white-space:nowrap;
+    transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .18s ease;
+  }
+  .btn:hover{background:var(--term-bg-soft);border-color:var(--term-ink-mute)}
+  .btn--primary{background:var(--term-accent);color:var(--term-bg);border-color:var(--term-accent);font-weight:600}
+  .btn--primary:hover{background:var(--term-accent-hover);border-color:var(--term-accent-hover);transform:translateY(-1px)}
+  .btn--lg{padding:13px 24px;font-size:15px}
+  .link{
+    color:var(--term-accent);
+    border-bottom:1px solid var(--term-accent-line);
+    padding-bottom:1px;transition:border-color .2s;cursor:pointer;
+  }
+  .link:hover{border-color:var(--term-accent)}
+  .more-link{
+    font-size:var(--term-fs-small);font-weight:500;color:var(--term-accent);
+    border-bottom:1px solid transparent;transition:border-color .18s ease;
+  }
+  .more-link:hover{border-bottom-color:var(--term-accent-line)}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(11,13,15,.86);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--term-line);
+  }
+  .nav{display:flex;align-items:center;gap:28px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:.01em}
+  .logo-mark{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:var(--term-r-sm);
+    background:var(--term-accent-soft);border:1px solid var(--term-accent-line);
+    color:var(--term-accent);font-size:14px;font-weight:600;
+  }
+  .logo .sub{font-family:var(--term-mono);font-size:11px;color:var(--term-ink-mute);letter-spacing:.1em;margin-left:2px}
+  .nav-links{display:flex;gap:4px;margin-left:auto}
+  .nav-links a{
+    font-size:var(--term-fs-small);color:var(--term-ink-dim);
+    padding:8px 12px;border-radius:var(--term-r-sm);transition:color .18s;
+  }
+  .nav-links a:hover{color:var(--term-ink)}
+  .nav-cta{margin-left:8px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 72px;position:relative;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(227,231,234,.05) 1px,transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(ellipse 75% 65% at 50% 0%,#000 20%,transparent 75%);
+    mask-image:radial-gradient(ellipse 75% 65% at 50% 0%,#000 20%,transparent 75%);
+  }
+  .hero-grid{
+    position:relative;display:grid;
+    grid-template-columns:1.04fr .96fr;gap:56px;align-items:center;
+  }
+  .hero-meta{
+    font-family:var(--term-mono);font-size:var(--term-fs-label);
+    color:var(--term-ink-mute);letter-spacing:.06em;margin-bottom:20px;
+  }
+  .hero-meta .sep{color:var(--term-line);margin:0 8px}
+  .hero h1{font-size:var(--term-fs-h1);margin-bottom:22px}
+  .hero h1 .u{
+    color:var(--term-accent);
+    border-bottom:2px solid var(--term-accent-line);
+  }
+  .hero-sub{color:var(--term-ink-dim);font-size:17px;max-width:540px;margin-bottom:28px}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+  .hero-pills{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* ---------- window mockup ---------- */
+  .win-wrap{position:relative}
+  .win-wrap::before{
+    content:"";position:absolute;inset:-12% -8%;
+    background:radial-gradient(closest-side,rgba(52,199,123,.09),transparent 72%);
+    pointer-events:none;
+  }
+  .win{
+    position:relative;border:1px solid var(--term-line);
+    background:var(--term-bg-elev);border-radius:var(--term-r-sm);
+    overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5);
+  }
+  .win-bar{
+    display:flex;align-items:center;gap:8px;padding:10px 14px;
+    border-bottom:1px solid var(--term-line);background:var(--term-bg-soft);
+    font-size:var(--term-fs-label);font-weight:500;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--term-ink-dim);
+  }
+  .win-dots{display:flex;gap:6px}
+  .win-dots span{width:8px;height:8px;border-radius:50%;background:var(--term-line)}
+  .win-dots span:first-child{background:var(--term-ink-mute)}
+  .win-title{margin-left:8px;font-family:var(--term-mono);text-transform:none;letter-spacing:.02em}
+  .win-tag{margin-left:auto;font-family:var(--term-mono);color:var(--term-ink-mute);text-transform:none;letter-spacing:.02em}
+  .win-body{padding:8px 20px 4px;font-family:var(--term-mono);font-size:13px;line-height:1.7}
+  .m-lead{padding:12px 0 14px;border-bottom:1px solid var(--term-line);color:var(--term-ink)}
+  .m-lead .arrow{color:var(--term-accent)}
+  .m-lead .count{color:var(--term-accent);font-weight:600}
+  .m-row{padding:13px 0;border-bottom:1px solid var(--term-line-soft)}
+  .m-row-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .m-dot{color:var(--term-accent)}
+  .m-when{color:var(--term-ink-mute)}
+  .m-name{color:var(--term-ink);font-weight:600}
+  .m-status{margin-left:auto;color:var(--term-ink-mute)}
+  .m-status.ok{color:var(--term-accent)}
+  .m-sub{color:var(--term-ink-mute);padding-left:20px;margin-top:2px}
+  .m-foot{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:14px 0 16px;color:var(--term-ink-dim);
+  }
+  .m-foot .go{margin-left:auto;color:var(--term-accent)}
+
+  /* ---------- tech strip ---------- */
+  .techstrip{border-top:1px solid var(--term-line);border-bottom:1px solid var(--term-line);background:var(--term-bg-elev)}
+  .techstrip-row{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+    gap:12px 44px;padding:20px 0;font-size:var(--term-fs-small);color:var(--term-ink-dim);
+  }
+  .techstrip-row .k{font-family:var(--term-mono);font-size:var(--term-fs-label);color:var(--term-ink-mute);letter-spacing:.06em;margin-right:8px}
+  .techstrip-row .v{color:var(--term-ink)}
+  .techstrip-row .item{display:inline-flex;align-items:baseline}
+
+  /* ---------- sections ---------- */
+  .section{padding:104px 0}
+  .section-head{margin-bottom:44px}
+  .section-head .eyebrow{margin-bottom:16px}
+  .section-head h2{font-size:var(--term-fs-h2)}
+  .section-head .lead{color:var(--term-ink-dim);max-width:620px;margin-top:16px;font-size:15.5px}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+  .step{border-top:1px solid var(--term-line);padding-top:22px}
+  .step .num{font-family:var(--term-mono);font-size:13px;color:var(--term-accent)}
+  .step h3{font-size:var(--term-fs-h3);font-weight:600;margin:10px 0 8px;letter-spacing:-.01em}
+  .step p{color:var(--term-ink-dim);font-size:var(--term-fs-small)}
+
+  /* entrance cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{
+    border:1px solid var(--term-line);background:var(--term-bg-elev);
+    border-radius:var(--term-r-md);padding:26px 24px;
+    transition:border-color .2s ease,transform .2s ease,background-color .2s ease;
+  }
+  .card:hover{border-color:var(--term-accent-line);background:var(--term-bg-soft);transform:translateY(-3px)}
+  .card .c-num{font-family:var(--term-mono);font-size:12px;color:var(--term-ink-mute)}
+  .card h3{font-size:var(--term-fs-h3);font-weight:600;margin:12px 0 4px;letter-spacing:-.01em}
+  .card .en{font-family:var(--term-mono);font-size:11px;color:var(--term-accent);letter-spacing:.08em;display:block;margin-bottom:10px}
+  .card p{color:var(--term-ink-dim);font-size:var(--term-fs-small)}
+
+  /* marquee */
+  .ticker{border-top:1px solid var(--term-line);border-bottom:1px solid var(--term-line);background:var(--term-bg-soft);overflow:hidden}
+  .ticker-track{display:flex;width:max-content;animation:tick 32s linear infinite}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  .ticker-track span{
+    font-family:var(--term-mono);font-size:var(--term-fs-label);
+    color:var(--term-ink-dim);letter-spacing:.08em;
+    padding:14px 0;white-space:nowrap;
+  }
+  .ticker-track .star{color:var(--term-accent);margin:0 22px}
+  @keyframes tick{to{transform:translateX(-50%)}}
+
+  /* events */
+  .events{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .event{
+    display:flex;flex-direction:column;gap:0;
+    border:1px solid var(--term-line);background:var(--term-bg-elev);
+    border-radius:var(--term-r-md);padding:24px;
+    transition:border-color .2s ease,transform .2s ease;
+  }
+  .event:hover{border-color:var(--term-accent-line);transform:translateY(-3px)}
+  .e-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
+  .e-date{font-family:var(--term-mono);font-size:40px;font-weight:600;color:var(--term-accent);line-height:1;letter-spacing:-.02em}
+  .e-ym{font-family:var(--term-mono);font-size:11px;color:var(--term-ink-mute);letter-spacing:.1em;margin-top:8px}
+  .e-tag{
+    font-family:var(--term-mono);font-size:var(--term-fs-label);color:var(--term-ink-dim);
+    border:1px solid var(--term-line);border-radius:100px;padding:4px 10px;letter-spacing:.04em;
+  }
+  .event h3{font-size:18px;font-weight:600;line-height:1.45;margin-bottom:14px;letter-spacing:-.01em}
+  .e-meta{font-family:var(--term-mono);font-size:12px;color:var(--term-ink-mute);margin-bottom:18px}
+  .e-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between}
+  .e-open{display:inline-flex;align-items:center;gap:8px;font-size:var(--term-fs-label);color:var(--term-ink-dim)}
+  .events-note{font-family:var(--term-mono);font-size:12px;color:var(--term-ink-mute);letter-spacing:.05em;margin-top:22px;text-align:center}
+
+  /* quote */
+  .quote{border-top:1px solid var(--term-line);border-bottom:1px solid var(--term-line);background:var(--term-bg-elev);padding:96px 0;text-align:center}
+  .quote .qmark{font-family:var(--term-mono);color:var(--term-accent);font-size:15px;letter-spacing:.2em;display:block;margin-bottom:20px}
+  .quote blockquote{
+    font-size:clamp(22px,2.6vw,30px);font-weight:600;letter-spacing:-.01em;
+    line-height:1.6;max-width:720px;margin:0 auto 22px;
+  }
+  .quote cite{font-family:var(--term-mono);font-style:normal;font-size:var(--term-fs-label);color:var(--term-ink-mute);letter-spacing:.1em}
+
+  /* cta */
+  .cta{padding:120px 0;text-align:center}
+  .cta h2{font-size:var(--term-fs-h2);margin-bottom:16px}
+  .cta .sub{color:var(--term-ink-dim);max-width:520px;margin:0 auto 32px;font-size:15.5px}
+  .cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .cta-micro{font-family:var(--term-mono);font-size:12px;color:var(--term-ink-mute);letter-spacing:.06em}
+
+  /* footer */
+  footer{border-top:1px solid var(--term-line);background:var(--term-bg-elev)}
+  .footer-grid{
+    display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:40px;padding:64px 0 56px;
+  }
+  .footer-brand p{color:var(--term-ink-dim);font-size:var(--term-fs-small);max-width:300px;margin:16px 0 20px}
+  .footer-brand .meta{font-family:var(--term-mono);font-size:11px;color:var(--term-ink-mute);letter-spacing:.1em}
+  .footer-col h4{
+    font-family:var(--term-mono);font-size:var(--term-fs-label);font-weight:500;
+    color:var(--term-ink-mute);letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;
+  }
+  .footer-col ul{list-style:none}
+  .footer-col li{margin-bottom:12px}
+  .footer-col a{font-size:var(--term-fs-small);color:var(--term-ink-dim);transition:color .18s}
+  .footer-col a:hover{color:var(--term-accent)}
+  .footer-col .static{font-size:var(--term-fs-small);color:var(--term-ink-dim)}
+  .footer-bottom{
+    border-top:1px solid var(--term-line);
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:22px 0;font-family:var(--term-mono);font-size:11px;color:var(--term-ink-mute);letter-spacing:.08em;
+  }
+  .footer-bottom .star{color:var(--term-accent)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease;transition-delay:var(--d,0s)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .ticker-track{animation:none}
+    .pulse{animation:none}
+    html{scroll-behavior:auto}
+  }
+
+  /* responsive */
+  @media (max-width:1020px){
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .hero-sub{max-width:none}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .events{grid-template-columns:repeat(2,1fr)}
+    .footer-grid{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:760px){
+    .container{padding:0 20px}
+    .nav-links{display:none}
+    .hero{padding:60px 0 56px}
+    .steps{grid-template-columns:1fr;gap:28px}
+    .cards{grid-template-columns:1fr}
+    .events{grid-template-columns:1fr}
+    .section{padding:80px 0}
+    .quote{padding:72px 0}
+    .cta{padding:88px 0}
+    .footer-grid{grid-template-columns:1fr;gap:32px;padding:48px 0 40px}
+    .techstrip-row{gap:10px 28px;justify-content:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= header ======= -->
+<header>
+  <div class="container nav">
+    <a class="logo" href="#top">
+      <span class="logo-mark">豆</span>
+      毛豆书屋<span class="sub">BOOKHOUSE</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#how">参与方式</a>
+      <a href="#entrances">四个入口</a>
+      <a href="#this-week">本周活动</a>
+      <a href="#about">关于</a>
+    </nav>
+    <a class="btn btn--primary nav-cta" href="#join">认领席位</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======= hero ======= -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-meta">线上<span class="sep">·</span>线下<span class="sep">·</span>VOL.11 — 2026/11</div>
+        <h1 class="display">找到一群<br><span class="u">愿意认真聊天</span>的人。</h1>
+        <p class="hero-sub">这里不急着给出答案。我们从一本书、一部电影，或一个还没想明白的问题开始，把各自的生活带到同一张桌子上。</p>
+        <div class="hero-actions">
+          <a class="btn btn--primary btn--lg" href="#join">认领本期席位 →</a>
+          <a class="btn btn--lg" href="#entrances">看看四个入口</a>
+        </div>
+        <div class="hero-pills">
+          <span class="pill"><span class="status-dot pulse"></span>席位开放中 · 本周还有 12 个</span>
+          <span class="pill">阅读 · 电影 · 写作 · 思辨</span>
+        </div>
+      </div>
+
+      <!-- window mockup -->
+      <div class="win-wrap">
+        <div class="win">
+          <div class="win-bar">
+            <div class="win-dots"><span></span><span></span><span></span></div>
+            <span class="win-title">maodou.bookhouse — 本周排期</span>
+            <span class="win-tag">2026/11</span>
+          </div>
+          <div class="win-body">
+            <div class="m-lead"><span class="count">3</span> 场活动 · <span class="count">12</span> 个席位 <span class="arrow">→</span> 正在招募</div>
+            <div class="m-row">
+              <div class="m-row-top"><span class="m-dot">●</span><span class="m-when">11/08 周日 20:00</span><span class="m-name">线上共读</span><span class="m-status ok">剩 3 席</span></div>
+              <div class="m-sub">把一本书读成自己的问题</div>
+            </div>
+            <div class="m-row">
+              <div class="m-row-top"><span class="m-dot">●</span><span class="m-when">11/15 周日 19:30</span><span class="m-name">观影会</span><span class="m-status ok">席位充足</span></div>
+              <div class="m-sub">看完电影之后，我们聊什么</div>
+            </div>
+            <div class="m-row">
+              <div class="m-row-top"><span class="m-dot">●</span><span class="m-when">11/22 周日 15:00</span><span class="m-name">思想桌游局</span><span class="m-status ok">报名中</span></div>
+              <div class="m-sub">游戏不会替你赢，但会让问题显形</div>
+            </div>
+            <div class="m-row">
+              <div class="m-row-top"><span class="m-dot dim">●</span><span class="m-when">每周四 21:00</span><span class="m-name">写作桌</span><span class="m-status">自由参加</span></div>
+              <div class="m-sub">把没想明白的事写下来</div>
+            </div>
+            <div class="m-foot">
+              <span>本周还有 12 个席位</span>
+              <span class="dim">线上 · 线下都可以</span>
+              <a class="go" href="#this-week">查看全部 ↓</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= tech strip ======= -->
+  <div class="techstrip">
+    <div class="container techstrip-row">
+      <span class="item"><span class="k">形式</span><span class="v">线上 · 线下</span></span>
+      <span class="item"><span class="k">人群</span><span class="v">对世界保持好奇的人</span></span>
+      <span class="item"><span class="k">节奏</span><span class="v">每周末一场</span></span>
+      <span class="item"><span class="k">规矩</span><span class="v">说真的 · 听完再回</span></span>
+    </div>
+  </div>
+
+  <!-- ======= 01 how ======= -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="num">01</span> 参与方式 <span class="en">/ how it works</span></div>
+        <h2 class="display">进门 → 落座 → <span class="accent">开聊</span>。</h2>
+        <p class="lead">认真，不等于把自己绷紧。好的交流不是把观点碰撞得更响，而是让一个人说完之后，仍然愿意听另一个人的故事。</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal" style="--d:.05s">
+          <span class="num">01</span>
+          <h3>从一个入口进来</h3>
+          <p>一本书、一部电影，或一个最近反复想起的句子，都可以是起点。没有标准姿势，只有愿意把话说真。</p>
+        </div>
+        <div class="step reveal" style="--d:.15s">
+          <span class="num">02</span>
+          <h3>坐到同一张桌子</h3>
+          <p>线上或线下，不赶时间。把各自的生活带过来——那是我们真正交换的东西。</p>
+        </div>
+        <div class="step reveal" style="--d:.25s">
+          <span class="num">03</span>
+          <h3>把话说真</h3>
+          <p>不是为了变得更厉害才来。只是有些时刻，想和别人把一件事想得再深一点。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= 02 entrances ======= -->
+  <section class="section" id="entrances" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="num">02</span> 四个入口 <span class="en">/ start anywhere</span></div>
+        <h2 class="display">四个入口，<span class="accent">通往同一间书房</span>。</h2>
+        <p class="lead">你可以从一本书开始，也可以从最近反复想起的一句话开始。常设栏目每周轮换，随到随入座。</p>
+      </div>
+      <div class="cards">
+        <div class="card reveal" style="--d:.02s">
+          <span class="c-num">01</span>
+          <h3>读书会</h3>
+          <span class="en">read together</span>
+          <p>每月一本。不追进度，不赶书单——把一本书读成自己的问题。</p>
+        </div>
+        <div class="card reveal" style="--d:.08s">
+          <span class="c-num">02</span>
+          <h3>观影会</h3>
+          <span class="en">after the credits</span>
+          <p>灯亮之后不散场。看电影，是为了聊那件一直说不清的事。</p>
+        </div>
+        <div class="card reveal" style="--d:.14s">
+          <span class="c-num">03</span>
+          <h3>写作桌</h3>
+          <span class="en">write it down</span>
+          <p>把没想明白的事写下来。写着写着，事情就自己变清楚了。</p>
+        </div>
+        <div class="card reveal" style="--d:.20s">
+          <span class="c-num">04</span>
+          <h3>思想桌游局</h3>
+          <span class="en">let it surface</span>
+          <p>游戏不会替你赢，但会让问题显形。输赢不重要，问题才重要。</p>
+        </div>
+        <div class="card reveal" style="--d:.26s">
+          <span class="c-num">05</span>
+          <h3>无主题之夜</h3>
+          <span class="en">no agenda</span>
+          <p>很多没有主题的晚上。你什么都不用带，只带一杯茶。</p>
+        </div>
+        <div class="card reveal" style="--d:.32s">
+          <span class="c-num">06</span>
+          <h3>书房便签</h3>
+          <span class="en">margin notes</span>
+          <p>每月一封小信：本月书单、一部电影，和三个还没答案的问题。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= marquee ======= -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>本周活动席位开放中<span class="star">✳</span>适合对自我、关系、社会与世界保持好奇的人<span class="star">✳</span>线上 · 线下都可以<span class="star">✳</span>把时间留给值得的人和事<span class="star">✳</span></span>
+      <span>本周活动席位开放中<span class="star">✳</span>适合对自我、关系、社会与世界保持好奇的人<span class="star">✳</span>线上 · 线下都可以<span class="star">✳</span>把时间留给值得的人和事<span class="star">✳</span></span>
+    </div>
+  </div>
+
+  <!-- ======= 03 this week ======= -->
+  <section class="section" id="this-week">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow"><span class="num">03</span> 本周发生什么 <span class="en">/ this week</span></div>
+        <h2 class="display">把时间留给<span class="accent">值得的人和事</span>。</h2>
+        <p class="lead">以下活动均在招募中。线上活动报名后发送链接，线下活动在书房进行，地址随确认消息发出。</p>
+      </div>
+      <div class="events">
+        <div class="event reveal" style="--d:.02s">
+          <div class="e-top">
+            <div>
+              <div class="e-date">08</div>
+              <div class="e-ym">NOV / 2026</div>
+            </div>
+            <span class="e-tag">线上共读</span>
+          </div>
+          <h3>把一本书读成自己的问题</h3>
+          <div class="e-meta">周日 20:00 — 21:30 · 线上</div>
+          <div class="e-foot">
+            <span class="e-open"><span class="status-dot pulse"></span>正在招募 · 剩 3 席</span>
+            <a class="more-link" href="#join">查看详情 →</a>
+          </div>
+        </div>
+        <div class="event reveal" style="--d:.1s">
+          <div class="e-top">
+            <div>
+              <div class="e-date">15</div>
+              <div class="e-ym">NOV / 2026</div>
+            </div>
+            <span class="e-tag">观影会</span>
+          </div>
+          <h3>看完电影之后，我们聊什么？</h3>
+          <div class="e-meta">周日 19:30 — 22:00 · 线下</div>
+          <div class="e-foot">
+            <span class="e-open"><span class="status-dot pulse"></span>正在招募</span>
+            <a class="more-link" href="#join">查看详情 →</a>
+          </div>
+        </div>
+        <div class="event reveal" style="--d:.18s">
+          <div class="e-top">
+            <div>
+              <div class="e-date">22</div>
+              <div class="e-ym">NOV / 2026</div>
+            </div>
+            <span class="e-tag">思想桌游局</span>
+          </div>
+          <h3>游戏不会替你赢，但会让问题显形</h3>
+          <div class="e-meta">周日 15:00 — 17:00 · 线下</div>
+          <div class="e-foot">
+            <span class="e-open"><span class="status-dot pulse"></span>正在招募</span>
+            <a class="more-link" href="#join">查看详情 →</a>
+          </div>
+        </div>
+      </div>
+      <div class="events-note reveal">// 席位有限 · 报满即止 · 线上线下均可参加</div>
+    </div>
+  </section>
+
+  <!-- ======= quote ======= -->
+  <div class="quote" id="about">
+    <div class="container reveal">
+      <span class="qmark">///</span>
+      <blockquote>愿我们在各自的生活里，<br>仍然保留<span class="accent">一点好奇</span>。</blockquote>
+      <cite>— 毛豆书屋 · 2026</cite>
+    </div>
+  </div>
+
+  <!-- ======= 04 cta ======= -->
+  <section class="cta" id="join">
+    <div class="container reveal">
+      <div class="eyebrow" style="margin-bottom:16px"><span class="num">04</span> 加入我们 <span class="en">/ sit with us</span></div>
+      <h2 class="display">有想认真聊的事？<br><span class="accent">来书房坐坐。</span></h2>
+      <p class="sub" style="margin-top:18px">第一次来不用带书，也不用准备发言。带上一个没想明白的问题，或者只带一杯茶就好。</p>
+      <div class="cta-actions">
+        <a class="btn btn--primary btn--lg" href="#top">认领本期席位 →</a>
+        <a class="btn btn--lg" href="#entrances">读一读书房手册</a>
+      </div>
+      <div class="cta-micro">不用自我介绍 · 不用读过那本书 · 没有标准答案</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======= footer ======= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#top">
+          <span class="logo-mark">豆</span>
+          毛豆书屋<span class="sub">BOOKHOUSE</span>
+        </a>
+        <p>找到一群愿意认真聊天的人。阅读、电影、写作与思辨的真诚交流空间。</p>
+        <div class="meta">MAODOU BOOKHOUSE · EST. 2025<br>线上 · 线下 ✳ OPEN WEEKENDS</div>
+      </div>
+      <div class="footer-col">
+        <h4>站点</h4>
+        <ul>
+          <li><a href="#how">参与方式</a></li>
+          <li><a href="#entrances">四个入口</a></li>
+          <li><a href="#this-week">本周活动</a></li>
+          <li><a href="#about">书房便签</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>栏目</h4>
+        <ul>
+          <li><a href="#entrances">读书会</a></li>
+          <li><a href="#entrances">观影会</a></li>
+          <li><a href="#entrances">写作桌</a></li>
+          <li><a href="#entrances">思想桌游局</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>联系</h4>
+        <ul>
+          <li><span class="static">微信公众号 · 毛豆书屋</span></li>
+          <li><span class="static">小红书 · 毛豆书屋</span></li>
+          <li><a href="#join">合作与转载 · 请留言</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 毛豆书屋 MAODOU BOOKHOUSE</span>
+      <span>找到一群愿意认真聊天的人 <span class="star">✳</span> 也可以先从一句话开始</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    if(!('IntersectionObserver' in window)){
+      document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
